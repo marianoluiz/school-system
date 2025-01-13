@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package finalsoop;
+package controller;
 
+import model.EntityModel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import java.sql.ResultSet;
@@ -12,27 +13,37 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import view.DashboardView;
 /**
  *
  * @author tulan
  */
-public class StudentController {
-    dbManager db = new dbManager(finalsConnect.Connect());
+public class EntityController {
+    private EntityModel entityModel;
+    private DashboardView dashboardView;
+    
     String cachedStudentNo = "";
     String genderTransformed;
     String statusTransformed;
+    
+    public EntityController(DashboardView dashboardView, EntityModel entityModel) {
+        this.entityModel = entityModel;
+        this.dashboardView = dashboardView;
+    }
+    
     public void cacheOldStudentNo(String oldStudentNo){
         cachedStudentNo = oldStudentNo;
     }
+    
     public void populateCourseOptions(JComboBox CourseCode){
         //populating the combo boxes
         try {
-            ResultSet rs = db.fetchCourses();
+            ResultSet rs = entityModel.fetchCourses();
             while(rs.next()){
                 CourseCode.addItem(rs.getString("description"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(StudentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EntityController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public void transformComboBoxes(JComboBox Gender, JComboBox Status){
@@ -54,6 +65,7 @@ public class StudentController {
                  "";
          };
     }
+    
     public void btnAddStudent (JTextField StudentNo, 
              JTextField LastName, 
              JTextField FirstName, 
@@ -65,9 +77,10 @@ public class StudentController {
              JTextField Birthday, 
              JComboBox Status, 
              JTextField DateStarted, 
-             JTextField DateGraduated) throws Exception {
+             JTextField DateGraduated) throws Exception 
+    {
          transformComboBoxes(Gender, Status);
-         db.addStudent(StudentNo.getText().trim(), 
+         entityModel.addStudent(StudentNo.getText().trim(), 
                  LastName.getText().trim(), 
                  FirstName.getText(), 
                  Email.getText(), 
@@ -79,6 +92,7 @@ public class StudentController {
                  statusTransformed, 
                  DateStarted.getText().trim(), 
                  DateGraduated.getText().trim());
+         
      }
      public void btnSetFields(JTable Table,
              JTextField StudentNo, 
@@ -102,7 +116,7 @@ public class StudentController {
                 String firstName = Table.getModel().getValueAt(row, 2).toString();
                 String email = Table.getModel().getValueAt(row, 3).toString();
                 String gender = Table.getModel().getValueAt(row, 4).toString();
-                String courseCode = findItemInResultSet(db.fetchCourses(), Table.getModel().getValueAt(row, 5).toString(), "course_code", "description");
+                String courseCode = findItemInResultSet(entityModel.fetchCourses(), Table.getModel().getValueAt(row, 5).toString(), "course_code", "description");
                 String cpNumber = Table.getModel().getValueAt(row, 6).toString();
                 String address = Table.getModel().getValueAt(row, 7).toString();
                 String birthday = Table.getModel().getValueAt(row, 8).toString();
@@ -141,9 +155,11 @@ public class StudentController {
              JTextField DateStarted, 
              JTextField DateGraduated) throws Exception{
         
+
+         
         //basically, i want transform the values of the combo boxes into a format accepted by the query before running the query
         transformComboBoxes(Gender, Status);
-        db.updateStudent(cachedStudentNo, 
+        entityModel.updateStudent(cachedStudentNo, 
                 StudentNo.getText().trim(), 
                 LastName.getText().trim(), 
                 FirstName.getText(), 
@@ -156,13 +172,16 @@ public class StudentController {
                 statusTransformed, 
                 DateStarted.getText().trim(), 
                 DateGraduated.getText().trim());
+        
+         System.out.println("cpnum: " + CpNumber.getText());
+
      }
      
      public void btnDeleteStudent(JTable Table) throws Exception{
          int row = Table.getSelectedRow();
             String studentNumber = Table.getModel().getValueAt(row, 0).toString();
          
-            db.deleteStudent(studentNumber);
+            entityModel.deleteStudent(studentNumber);
      }
      
      //you can re-use this function

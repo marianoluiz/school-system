@@ -1,37 +1,54 @@
-    /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package finalsoop;
 
-import java.sql.Connection;
+package view;
+
+import controller.EmployeeController;
+import controller.EntityController;
+import model.EntityModel;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.awt.CardLayout;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import model.DBConnection;
 
-/**
- *
- * @author tulan
- */
-public class schoolManagementMainUI extends javax.swing.JFrame {
+
+public class DashboardView extends javax.swing.JFrame {
+    
+    private BuildingModel buildingModel;
+    private EntityController entityController;
+    private EmployeeController employeeController;
+
+
+    // Testing
+    Connection conn = new DBConnection().Connect();
+    
+    // For populating the options and some unrevised stuffs
+    public void setEntityModel(EntityModel entityModel) {
+        this.entityModel = entityModel;
+    }
+    
+    // set the controller
+    public void setEntityController(EntityController entityController) {
+        this.entityController = entityController;
+    }
+    
+    // set the controller
+    public void setEmployeeController (EmployeeController employeeController) {
+        this.employeeController = employeeController;
+    }
 
     private String currentData = "";
     private Boolean boolAdd = true;
-    private Connection conn = finalsConnect.Connect();
-    private dbManager db = new dbManager(conn);
     private javax.swing.JTable populatedTable = null;
     private java.sql.ResultSet currentRs = null;
     private String oldCollegeCode;
     private String oldDescription;
     private String oldDateOpened;
     private String oldDateClosed;
-    private String oldStatus;
-    private StudentController studentController = new StudentController();
-    
-     private String oldEmployeeID;
+    private String oldStatus;    
+    private String oldEmployeeID;
     private String oldLastName;
     private String oldFirstName;
     private String oldEmail;
@@ -71,7 +88,7 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
     /**
      * Creates new form schoolManagementMainUI
      */
-    public schoolManagementMainUI() {
+    public DashboardView() {
         initComponents();
     }
 
@@ -1823,80 +1840,64 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSubjSchedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjSchedActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSubjSchedActionPerformed
-
-    private void btnCollegeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCollegeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCollegeActionPerformed
-
-    private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnStudentActionPerformed
-
-    private void btnEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmployeeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEmployeeActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        populatedTable = tblDashboard;
-        cacheResultSet(db.fetchStudents());
+        populatedTable = tblDashboard; // Either Dashboard or Management
+        cacheResultSet(entityModel.fetchStudents());
     }//GEN-LAST:event_formWindowActivated
 
     private void btnStudentGradesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStudentGradesMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(db.fetchGrades());
+        cacheResultSet(entityModel.fetchGrades());
         currentData = "StudentGrades";
     }//GEN-LAST:event_btnStudentGradesMouseClicked
 
     private void btnSubjSchedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubjSchedMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(db.fetchSubjectSchedules());
+        cacheResultSet(entityModel.fetchSubjectSchedules());
         currentData = "SubjectSchedule";
     }//GEN-LAST:event_btnSubjSchedMouseClicked
 
     private void btnSchoolYearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSchoolYearMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(db.fetchSchoolYears());
+        cacheResultSet(entityModel.fetchSchoolYears());
         currentData = "SchoolYear";
     }//GEN-LAST:event_btnSchoolYearMouseClicked
 
     private void btnCollegeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCollegeMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(db.fetchColleges());
+        cacheResultSet(entityModel.fetchColleges());
         currentData = "College";
     }//GEN-LAST:event_btnCollegeMouseClicked
 
     private void btnSemesterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSemesterMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(db.fetchSemesters());
+        cacheResultSet(entityModel.fetchSemesters());
         currentData = "Semester";
     }//GEN-LAST:event_btnSemesterMouseClicked
 
     private void btnCourseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCourseMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(db.fetchCourses());
+        cacheResultSet(entityModel.fetchCourses());
         currentData = "Course";
     }//GEN-LAST:event_btnCourseMouseClicked
 
     private void btnStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStudentMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(db.fetchStudents());
+        cacheResultSet(entityModel.fetchStudents());
         currentData = "Students";
-        System.out.println(currentData);
     }//GEN-LAST:event_btnStudentMouseClicked
 
     private void btnEmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEmployeeMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(db.fetchEmployees());
+        cacheResultSet(entityModel.fetchEmployees());
         currentData = "Employee";
     }//GEN-LAST:event_btnEmployeeMouseClicked
 
     private void btnSubjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubjectMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(db.fetchSubjects());
+        cacheResultSet(entityModel.fetchSubjects());
         currentData = "Subject";
 
     }//GEN-LAST:event_btnSubjectMouseClicked
@@ -1905,7 +1906,7 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         switchToCard("pnlDashboard");
         populatedTable = tblDashboard;
-        cacheResultSet(db.fetchStudents());
+        cacheResultSet(entityModel.fetchStudents());
         currentData = "Students";
     }//GEN-LAST:event_btnDashboardMouseClicked
 
@@ -1913,92 +1914,11 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         switchToCard("pnlManagement");
         populatedTable = tblManagement;
-        cacheResultSet(db.fetchStudents());
+        cacheResultSet(entityModel.fetchStudents());
         currentData = "Students";
     }//GEN-LAST:event_btnManagementMouseClicked
 
-    private void cmbDayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDayActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbDayActionPerformed
-
-    private void cmbEmployeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEmployeeNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbEmployeeNameActionPerformed
-
-    private void cmbSYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSYearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSYearActionPerformed
-
-    private void cmbSemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSemesterActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSemesterActionPerformed
-
-    private void cmbCollegeCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCollegeCodeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbCollegeCodeActionPerformed
-
-    private void btnConfirmSchedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmSchedMouseClicked
-        // TODO add your handling code here:
-        String selectedDay = (String) cmbDay.getSelectedItem();
-        String dayCode;
-
-        dayCode = switch (selectedDay) {
-            case "Monday" ->
-                "M";
-            case "Tuesday" ->
-                "T";
-            case "Wednesday" ->
-                "W";
-            case "Thursday" ->
-                "Th";
-            case "Friday" ->
-                "F";
-            case "Saturday" ->
-                "S";
-            case "Sunday" ->
-                "Su";
-            default ->
-                "";
-        };
-
-        if (boolAdd) {
-            db.addSubjectSchedule(
-                    cmbSYear.getSelectedItem().toString().trim(),
-                    cmbSemester.getSelectedItem().toString().trim(),
-                    "(SELECT college_code FROM finalsoop.college WHERE description = '" + cmbCollegeCode.getSelectedItem().toString().trim() + "')",
-                    txtBlockNo.getText().trim(),
-                    "(SELECT subject_code FROM finalsoop.subject WHERE description = '" + cmbSubjectCode.getSelectedItem().toString().trim() + "')",
-                    dayCode,
-                    txtTime.getText(),
-                    txtRoom.getText(),
-                    txtType.getText(),
-                    Integer.parseInt(txtSequence.getText()),
-                    "(SELECT employee_id FROM finalsoop.employee WHERE CONCAT(lastname, ', ', firstname) = '" + cmbEmployeeName.getSelectedItem().toString().trim() + "')"
-            );
-            
-        } else {
-            db.updateSubjectSchedule(
-                    cmbSYear.getSelectedItem().toString().trim(),
-                    cmbSemester.getSelectedItem().toString().trim(),
-                    "(SELECT college_code FROM finalsoop.college WHERE description = '" + cmbCollegeCode.getSelectedItem().toString().trim() + "')",
-                    txtBlockNo.getText().trim(),
-                    "(SELECT subject_code FROM finalsoop.subject WHERE description = '" + cmbSubjectCode.getSelectedItem().toString().trim() + "')",
-                    dayCode,
-                    txtTime.getText(),
-                    txtRoom.getText(),
-                    txtType.getText(),
-                    Integer.parseInt(txtSequence.getText()),
-                    "(SELECT employee_id FROM finalsoop.employee WHERE CONCAT(lastname, ', ', firstname) = '" + cmbEmployeeName.getSelectedItem().toString().trim() + "')"
-            );
-        }
-        switchToCard("pnlManagement");
-        db.populateTable(db.fetchSubjectSchedules(), populatedTable);
-    }//GEN-LAST:event_btnConfirmSchedMouseClicked
-
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddActionPerformed
-
+    // Clicking Add
     private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
         boolAdd = true;
         System.out.println(currentData);
@@ -2010,46 +1930,44 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
         if (currentData.equals("College")) {
             switchToCard("pnlAddCollege");
         }
-        
-        if(currentData.equals("Students")){
+
+        if (currentData.equals("Students")) {
             switchToCard("pnlStudent");
-            studentController.populateCourseOptions(cmbCourseCode);
+            entityController.populateCourseOptions(cmbCourseCode);
         }
 
         if (currentData.equals("Employee")) {
             switchToCard("pnlAddEmployee");
         }
-        
+
         if (currentData.equals("StudentGrades")) {
             switchToCard("pnlAddGrade");
             populateGradeOptions();
         }
     }//GEN-LAST:event_btnAddMouseClicked
 
-    private void cmbSubjectCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSubjectCodeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSubjectCodeActionPerformed
-
+    // Clicking Update
     private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
         // TODO add your handling code here:
 
         boolAdd = false;
         System.out.println(currentData);
-        if(currentData.equals("Students")){
+        if (currentData.equals("Students")) {
             switchToCard("pnlStudent");
-            studentController.populateCourseOptions(cmbCourseCode);
-            studentController.btnSetFields(tblManagement, 
-                    txtStudentNo, 
-                    txtLastNameStudent, 
-                    txtFirstNameStudent, 
-                    txtEmailStudent, 
-                    cmbGenderStudent, 
-                    cmbCourseCode, 
-                    txtPhoneNo, 
-                    txtAddressStudent, 
-                    txtBirthdayStudent, 
-                    cmbStatusStudent, 
-                    txtDateStartedStudent, 
+            entityController.populateCourseOptions(cmbCourseCode);
+            entityController.btnSetFields(
+                    tblManagement,
+                    txtStudentNo,
+                    txtLastNameStudent,
+                    txtFirstNameStudent,
+                    txtEmailStudent,
+                    cmbGenderStudent,
+                    cmbCourseCode,
+                    txtPhoneNo,
+                    txtAddressStudent,
+                    txtBirthdayStudent,
+                    cmbStatusStudent,
+                    txtDateStartedStudent,
                     txtDateGraduatedStudent);
         }
         if (currentData.equals("College")) {
@@ -2095,7 +2013,7 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
                     default ->
                         "";
                 };
-                String collegeCode = findItemInResultSet(db.fetchColleges(), tblManagement.getModel().getValueAt(row, 2).toString(), "college_code", "description");
+                String collegeCode = findItemInResultSet(entityModel.fetchColleges(), tblManagement.getModel().getValueAt(row, 2).toString(), "college_code", "description");
                 switchToCard("pnlAddSubjSched");
                 cmbSYear.setSelectedItem(tblManagement.getModel().getValueAt(row, 0).toString());
                 cmbSemester.setSelectedItem(tblManagement.getModel().getValueAt(row, 1).toString());
@@ -2113,53 +2031,52 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
             }
         }
         System.out.println(currentData.equals("Employee"));
-            
-            if (currentData.equals("Employee")) {
-                int row = tblManagement.getSelectedRow();
-                System.out.println(row);
-                
-                if (row != -1) {
-                    oldEmployeeID = tblManagement.getValueAt(row, 0).toString();
-                    oldLastName = tblManagement.getValueAt(row, 1).toString();
-                    oldFirstName = tblManagement.getValueAt(row, 2).toString();
-                    oldEmail = tblManagement.getValueAt(row, 3).toString();
-                    oldGender = tblManagement.getValueAt(row, 4).toString();
-                    oldCpNum = tblManagement.getValueAt(row, 5).toString();
-                    oldAddress = tblManagement.getValueAt(row, 6).toString();
-                    oldBirthdate = tblManagement.getValueAt(row, 7).toString();
-                    oldStatus = tblManagement.getValueAt(row, 8).toString();
-                    oldDateStarted = tblManagement.getValueAt(row, 9).toString();
-                    oldDateResigned = tblManagement.getValueAt(row, 10).toString();
-                    
-                    switchToCard("pnlAddEmployee");
-                    txtEmpID.setText(oldEmployeeID);
-                    txtLastName.setText(oldLastName);
-                    txtFirstName.setText(oldFirstName);
-                    txtEmail.setText(oldEmail);
-                    cmbGender.setSelectedItem(oldGender);
-                    txtCpNo.setText(oldCpNum);
-                    txtAddress.setText(oldAddress);
-                    txtBirthdate.setText(oldBirthdate);
-                    cmbEmployeeStat.setSelectedItem(oldStatus);
-                    txtDateStarted.setText(oldDateStarted);
-                    txtDateResigned.setText(oldDateResigned);
-                } else {
-                    JOptionPane.showMessageDialog(null, "No record selected");
-                }
+
+        if (currentData.equals("Employee")) {
+            int row = tblManagement.getSelectedRow();
+            System.out.println(row);
+
+            if (row != -1) {
+                oldEmployeeID = tblManagement.getValueAt(row, 0).toString();
+                oldLastName = tblManagement.getValueAt(row, 1).toString();
+                oldFirstName = tblManagement.getValueAt(row, 2).toString();
+                oldEmail = tblManagement.getValueAt(row, 3).toString();
+                oldGender = tblManagement.getValueAt(row, 4).toString();
+                oldCpNum = tblManagement.getValueAt(row, 5).toString();
+                oldAddress = tblManagement.getValueAt(row, 6).toString();
+                oldBirthdate = tblManagement.getValueAt(row, 7).toString();
+                oldStatus = tblManagement.getValueAt(row, 8).toString();
+                oldDateStarted = tblManagement.getValueAt(row, 9).toString();
+                oldDateResigned = tblManagement.getValueAt(row, 10).toString();
+
+                switchToCard("pnlAddEmployee");
+                txtEmpID.setText(oldEmployeeID);
+                txtLastName.setText(oldLastName);
+                txtFirstName.setText(oldFirstName);
+                txtEmail.setText(oldEmail);
+                cmbGender.setSelectedItem(oldGender);
+                txtCpNo.setText(oldCpNum);
+                txtAddress.setText(oldAddress);
+                txtBirthdate.setText(oldBirthdate);
+                cmbEmployeeStat.setSelectedItem(oldStatus);
+                txtDateStarted.setText(oldDateStarted);
+                txtDateResigned.setText(oldDateResigned);
+            } else {
+                JOptionPane.showMessageDialog(null, "No record selected");
             }
-            
+        }
+
         if (currentData.equals("StudentGrades")) {
             int row = tblManagement.getSelectedRow();
 
             if (row != -1) {
-                
+
                 oldSchoolYear = tblManagement.getModel().getValueAt(row, 0).toString();
                 oldSemester = tblManagement.getModel().getValueAt(row, 1).toString();
-                oldStudentNo = findConcatenatedItemInResultSet(db.fetchStudents(), tblManagement.getModel().getValueAt(row, 2).toString(), "lastname", "firstname", "student_no");
-                oldSubjectCode = findItemInResultSet(db.fetchSubjects(), tblManagement.getModel().getValueAt(row, 3).toString(), "description", "subject_code");
+                oldStudentNo = findConcatenatedItemInResultSet(entityModel.fetchStudents(), tblManagement.getModel().getValueAt(row, 2).toString(), "lastname", "firstname", "student_no");
+                oldSubjectCode = findItemInResultSet(entityModel.fetchSubjects(), tblManagement.getModel().getValueAt(row, 3).toString(), "description", "subject_code");
                 oldAddGradeBlockNo = tblManagement.getModel().getValueAt(row, 4).toString();
                 oldGrade = Double.parseDouble(tblManagement.getModel().getValueAt(row, 5).toString());
-
 
                 cmbSYear2.setSelectedItem(oldSchoolYear);
                 cmbSemester2.setSelectedItem(oldSemester);
@@ -2177,19 +2094,22 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
     private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
         // TODO add your handling code here:
         int row = tblManagement.getSelectedRow();
+        
         if (currentData.equals("Employee")) {
             if (row != -1) {
+                
                 String strEmployeeId = tblManagement.getModel().getValueAt(row, 0).toString();
-                db.deleteEmployee(strEmployeeId);
-                db.populateTable(db.fetchEmployees(), populatedTable);
+                employeeController.deleteEmployee(populatedTable, strEmployeeId);
+                
             } else {
                 JOptionPane.showMessageDialog(null, "No record selected");
             }
         }
-        if(currentData.equals("Students")){
+        
+        if (currentData.equals("Students")) {
             try {
-                studentController.btnDeleteStudent(tblManagement);
-                db.populateTable(db.fetchStudents(), populatedTable);
+                entityController.btnDeleteStudent(tblManagement);
+                entityModel.populateTable(entityModel.fetchStudents(), populatedTable);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "No record selected");
             }
@@ -2202,12 +2122,13 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
                 String strSemester = tblManagement.getModel().getValueAt(row, 1).toString();
                 String strBlockNo = tblManagement.getModel().getValueAt(row, 3).toString();
                 String strSequenceNo = tblManagement.getModel().getValueAt(row, 10).toString();
-                db.deleteSubjectSchedule(strSubjectCode, strCollegeCode, strSequenceNo, strBlockNo, strSemester, strSYear);
-                db.populateTable(db.fetchSubjectSchedules(), populatedTable);
+                entityModel.deleteSubjectSchedule(strSubjectCode, strCollegeCode, strSequenceNo, strBlockNo, strSemester, strSYear);
+                entityModel.populateTable(entityModel.fetchSubjectSchedules(), populatedTable);
             } else {
                 JOptionPane.showMessageDialog(null, "No record selected");
             }
         }
+        
         if (currentData.equals("College")) {
             if (row != -1) {
                 String strCollegeCode = tblManagement.getModel().getValueAt(row, 0).toString();
@@ -2215,13 +2136,80 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
                 String strDateOpened = tblManagement.getModel().getValueAt(row, 2).toString();
                 String strDateClosed = tblManagement.getModel().getValueAt(row, 3).toString();
                 String strStatus = tblManagement.getModel().getValueAt(row, 4).toString();
-                db.deleteCollege(strCollegeCode, strDescription, strDateOpened, strDateClosed, strStatus);
-                db.populateTable(db.fetchColleges(), populatedTable);
+                entityModel.deleteCollege(strCollegeCode, strDescription, strDateOpened, strDateClosed, strStatus);
+                entityModel.populateTable(entityModel.fetchColleges(), populatedTable);
             } else {
                 JOptionPane.showMessageDialog(null, "No record selected");
             }
         }
+        
     }//GEN-LAST:event_btnDeleteMouseClicked
+
+    private void cmbStatusStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStatusStudentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbStatusStudentActionPerformed
+
+    private void cmbGenderStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGenderStudentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbGenderStudentActionPerformed
+
+    private void btnCancelStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelStudentMouseClicked
+        // TODO add your handling code here:
+        switchToCard("pnlManagement");
+    }//GEN-LAST:event_btnCancelStudentMouseClicked
+
+    private void btnConfirmStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmStudentMouseClicked
+        // TODO add your handling code here:
+        if (boolAdd) {
+            try {
+                entityController.btnAddStudent(
+                        txtStudentNo,
+                        txtLastNameStudent,
+                        txtFirstNameStudent,
+                        txtEmailStudent,
+                        cmbGenderStudent,
+                        cmbCourseCode,
+                        txtPhoneNo,
+                        txtAddressStudent,
+                        txtBirthdayStudent,
+                        cmbStatusStudent,
+                        txtDateStartedStudent,
+                        txtDateGraduatedStudent);
+                entityModel.populateTable(entityModel.fetchStudents(), populatedTable);
+                switchToCard("pnlManagement");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Adding of student failed");
+            }
+        } else {
+            try {
+                entityController.btnUpdateStudent(txtStudentNo,
+                        txtLastNameStudent,
+                        txtFirstNameStudent,
+                        txtEmailStudent,
+                        cmbGenderStudent,
+                        cmbCourseCode,
+                        txtPhoneNo,
+                        txtAddressStudent,
+                        txtBirthdayStudent,
+                        cmbStatusStudent,
+                        txtDateStartedStudent,
+                        txtDateGraduatedStudent);
+                entityModel.populateTable(entityModel.fetchStudents(), populatedTable);
+                switchToCard("pnlManagement");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "No record selected to update");
+            }
+        }
+    }//GEN-LAST:event_btnConfirmStudentMouseClicked
+
+    private void cmbCourseCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCourseCodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbCourseCodeActionPerformed
+
+    private void btnBackCollegeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackCollegeMouseClicked
+        // TODO add your handling code here:
+        switchToCard("pnlManagement");
+    }//GEN-LAST:event_btnBackCollegeMouseClicked
 
     private void btnConfirmCollegeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmCollegeMouseClicked
         // TODO add your handling code here:
@@ -2237,7 +2225,7 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
         }
 
         if (boolAdd) {
-            db.addCollegeRecord(
+            entityModel.addCollegeRecord(
                     txtCollegeCode1.getText().trim(),
                     txtDesc.getText().trim(),
                     txtDateOp.getText(),
@@ -2249,9 +2237,8 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
             txtDesc.setText("");
             txtDateOp.setText("");
             txtDateCl.setText("");
-            
 
-            db.populateTable(db.fetchColleges(), populatedTable);
+            entityModel.populateTable(entityModel.fetchColleges(), populatedTable);
             switchToCard("pnlManagement");
 
         } else {
@@ -2263,118 +2250,342 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
                 String newDateClosed = txtDateCl.getText();
                 String newStatus = txtStatus.getSelectedItem().toString().trim();
 
-                db.updateCollege(newCollegeCode, newDescription, newDateOpened, newDateClosed, newStatus);
-                db.populateTable(db.fetchColleges(), populatedTable);
+                entityModel.updateCollege(newCollegeCode, newDescription, newDateOpened, newDateClosed, newStatus);
+                entityModel.populateTable(entityModel.fetchColleges(), populatedTable);
 
                 txtCollegeCode1.setText("");
                 txtDesc.setText("");
                 txtDateOp.setText("");
                 txtDateCl.setText("");
-                
 
                 switchToCard("pnlManagement");
             } else {
                 JOptionPane.showMessageDialog(null, "No record selected to update");
             }
         }
-
     }//GEN-LAST:event_btnConfirmCollegeMouseClicked
+
+    private void btnConfirmEmployee1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmEmployee1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfirmEmployee1ActionPerformed
+
+    private void btnConfirmEmployee1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmEmployee1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfirmEmployee1MouseClicked
+
+    private void btnBackEmployee1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackEmployee1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBackEmployee1MouseClicked
+
+    private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox5ActionPerformed
+
+    private void btnConfirmEmployee2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmEmployee2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfirmEmployee2ActionPerformed
+
+    private void btnConfirmEmployee2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmEmployee2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfirmEmployee2MouseClicked
+
+    private void btnBackEmployee2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackEmployee2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBackEmployee2MouseClicked
+
+    private void btnConfirmEmployee3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmEmployee3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfirmEmployee3ActionPerformed
+
+    private void btnConfirmEmployee3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmEmployee3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfirmEmployee3MouseClicked
+
+    private void btnBackEmployee3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackEmployee3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBackEmployee3MouseClicked
+
+    private void cmbSemester2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSemester2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbSemester2ActionPerformed
+
+    private void cmbGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGradeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbGradeActionPerformed
+
+    private void cmbSubjectDesc2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSubjectDesc2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbSubjectDesc2ActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagementActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnManagementActionPerformed
 
-    private void btnBackCollegeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackCollegeMouseClicked
+
+    private void btnAddCancel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddCancel2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddCancel2MouseClicked
+
+    private void btnConfirmGradeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmGradeMouseClicked
+        // TODO add your handling code here:
+
+        if (boolAdd) {
+            entityModel.addGrade(
+                    cmbSYear2.getSelectedItem().toString().trim(),
+                    cmbSemester2.getSelectedItem().toString().trim(),
+                    "(SELECT student_no FROM finalsoop.student WHERE CONCAT(lastname, ', ', firstname) = '" + cmbStudentName.getSelectedItem().toString().trim() + "')",
+                    "(SELECT subject_code FROM finalsoop.subject WHERE description = '" + cmbSubjectDesc2.getSelectedItem().toString().trim() + "')",
+                    txtBlockNo2.getText().trim(),
+                    Double.parseDouble(cmbGrade.getSelectedItem().toString().trim())
+            );
+            switchToCard("pnlManagement");
+        } else {
+            //update here
+        }
+    }//GEN-LAST:event_btnConfirmGradeMouseClicked
+
+    private void cmbSYear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSYear2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbSYear2ActionPerformed
+
+    private void cmbStudentNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStudentNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbStudentNameActionPerformed
+
+    private void cmbSubjectCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSubjectCodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbSubjectCodeActionPerformed
+
+    private void btnAddCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddCancelMouseClicked
         // TODO add your handling code here:
         switchToCard("pnlManagement");
-    }//GEN-LAST:event_btnBackCollegeMouseClicked
+    }//GEN-LAST:event_btnAddCancelMouseClicked
 
+    private void btnConfirmSchedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmSchedMouseClicked
+        // TODO add your handling code here:
+        String selectedDay = (String) cmbDay.getSelectedItem();
+        String dayCode;
+
+        dayCode = switch (selectedDay) {
+            case "Monday" ->
+                "M";
+            case "Tuesday" ->
+                "T";
+            case "Wednesday" ->
+                "W";
+            case "Thursday" ->
+                "Th";
+            case "Friday" ->
+                "F";
+            case "Saturday" ->
+                "S";
+            case "Sunday" ->
+                "Su";
+            default ->
+                "";
+        };
+
+        if (boolAdd) {
+            entityModel.addSubjectSchedule(
+                    cmbSYear.getSelectedItem().toString().trim(),
+                    cmbSemester.getSelectedItem().toString().trim(),
+                    "(SELECT college_code FROM finalsoop.college WHERE description = '" + cmbCollegeCode.getSelectedItem().toString().trim() + "')",
+                    txtBlockNo.getText().trim(),
+                    "(SELECT subject_code FROM finalsoop.subject WHERE description = '" + cmbSubjectCode.getSelectedItem().toString().trim() + "')",
+                    dayCode,
+                    txtTime.getText(),
+                    txtRoom.getText(),
+                    txtType.getText(),
+                    Integer.parseInt(txtSequence.getText()),
+                    "(SELECT employee_id FROM finalsoop.employee WHERE CONCAT(lastname, ', ', firstname) = '" + cmbEmployeeName.getSelectedItem().toString().trim() + "')"
+            );
+
+        } else {
+            entityModel.updateSubjectSchedule(
+                    cmbSYear.getSelectedItem().toString().trim(),
+                    cmbSemester.getSelectedItem().toString().trim(),
+                    "(SELECT college_code FROM finalsoop.college WHERE description = '" + cmbCollegeCode.getSelectedItem().toString().trim() + "')",
+                    txtBlockNo.getText().trim(),
+                    "(SELECT subject_code FROM finalsoop.subject WHERE description = '" + cmbSubjectCode.getSelectedItem().toString().trim() + "')",
+                    dayCode,
+                    txtTime.getText(),
+                    txtRoom.getText(),
+                    txtType.getText(),
+                    Integer.parseInt(txtSequence.getText()),
+                    "(SELECT employee_id FROM finalsoop.employee WHERE CONCAT(lastname, ', ', firstname) = '" + cmbEmployeeName.getSelectedItem().toString().trim() + "')"
+            );
+        }
+        switchToCard("pnlManagement");
+        entityModel.populateTable(entityModel.fetchSubjectSchedules(), populatedTable);
+    }//GEN-LAST:event_btnConfirmSchedMouseClicked
+
+    private void cmbCollegeCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCollegeCodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbCollegeCodeActionPerformed
+
+    private void cmbSemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSemesterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbSemesterActionPerformed
+
+    private void cmbSYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSYearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbSYearActionPerformed
+
+    private void cmbEmployeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEmployeeNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbEmployeeNameActionPerformed
+
+    private void cmbDayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbDayActionPerformed
+
+    private void cmbSubjectCode1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSubjectCode1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbSubjectCode1ActionPerformed
+
+    private void btnAddCancel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddCancel1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddCancel1MouseClicked
+
+    private void btnConfirmSched1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmSched1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfirmSched1MouseClicked
+
+    private void cmbCollegeCode1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCollegeCode1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbCollegeCode1ActionPerformed
+
+    private void cmbSYear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSYear1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbSYear1ActionPerformed
+
+    private void cmbEmployeeName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEmployeeName1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbEmployeeName1ActionPerformed
+
+    private void cmbDay1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDay1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbDay1ActionPerformed
+
+    private void btnConfirmEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmEmployeeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfirmEmployeeActionPerformed
+
+    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
+        // Code to handle dashboard button click
+    }//GEN-LAST:event_btnDashboardActionPerformed
+
+    private void btnSubjSchedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjSchedActionPerformed
+        // Code to handle subject schedule button click
+    }//GEN-LAST:event_btnSubjSchedActionPerformed
+
+    private void btnStudentGradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentGradesActionPerformed
+        // Code to handle student grades button click
+    }//GEN-LAST:event_btnStudentGradesActionPerformed
+
+    private void btnCollegeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCollegeActionPerformed
+        // Code to handle college button click
+    }//GEN-LAST:event_btnCollegeActionPerformed
+
+    private void btnEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmployeeActionPerformed
+        // Code to handle employee button click
+    }//GEN-LAST:event_btnEmployeeActionPerformed
+
+    private void btnSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjectActionPerformed
+        // Code to handle subject button click
+    }//GEN-LAST:event_btnSubjectActionPerformed
+
+    private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
+        // Code to handle student button click
+    }//GEN-LAST:event_btnStudentActionPerformed
+
+    // Clicking Confirm
     private void btnConfirmEmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmEmployeeMouseClicked
         // TODO add your handling code here:
-        
-        if (currentData.equals("Employee")) {
-                
-            String genderCode = switch(cmbGender.getSelectedItem().toString().trim()){
-                case "Male" -> 
-                    "M";
-                case "Female"->
-                    "F";
-                default ->
-                    "";
-            };
-            if (txtEmpID.getText().trim().isEmpty()
-                    || txtLastName.getText().trim().isEmpty()
-                    || txtFirstName.getText().trim().isEmpty()
-                    || txtEmail.getText().trim().isEmpty()
-                    || cmbGender.getSelectedItem() == null
-                    || txtCpNo.getText().trim().isEmpty()
-                    || txtAddress.getText().trim().isEmpty()
-                    || txtBirthdate.getText().trim().isEmpty()
-                    || txtStatus.getSelectedItem() == null
-                    || txtDateStarted.getText().trim().isEmpty()
-                    || txtDateResigned.getText().trim().isEmpty()) {
+        String strEmpId = txtEmpID.getText().trim();
+        String strLastName = txtLastName.getText().trim();
+        String strFirstName = txtFirstName.getText();
+        String strEmail = txtEmail.getText().trim();
+        String strGender = cmbGender.getSelectedItem().toString();
+        String strCpNo = txtCpNo.getText().trim();
+        String strAddress = txtAddress.getText().trim();
+        String strBirthdate = txtBirthdate.getText().trim();
+        String strStatus = txtStatus.getSelectedItem().toString();
+        String strDateStarted = txtDateStarted.getText().trim();
+        String strDateResigned = txtDateResigned.getText().trim();
 
+        if (currentData.equals("Employee")) {
+            // Input validation
+            if (strEmpId.isEmpty()
+                    || strLastName.isEmpty()
+                    || strFirstName.isEmpty()
+                    || strEmail.isEmpty()
+                    || strGender.isEmpty()
+                    || strCpNo.isEmpty()
+                    || strAddress.isEmpty()
+                    || strBirthdate.isEmpty()
+                    || strStatus.isEmpty()
+                    || strDateStarted.isEmpty()
+                    || strDateResigned.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "All fields must be filled in.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
             if (boolAdd) {
-                // Adding of new employee record
-                db.addEmployee(
-                        txtEmpID.getText().trim(),
-                        txtLastName.getText().trim(),
-                        txtFirstName.getText().trim(),
-                        txtEmail.getText().trim(),
-                        genderCode,
-                        txtCpNo.getText().trim(),
-                        txtAddress.getText().trim(),
-                        txtBirthdate.getText().trim(),
-                        cmbEmployeeStat.getSelectedItem().toString().trim(),
-                        txtDateStarted.getText().trim(),
-                        txtDateResigned.getText().trim()
+                
+                // we pass the table since we will repopulate it
+                employeeController.addEmployee( 
+                        populatedTable
+                        , strEmpId
+                        , strLastName
+                        , strFirstName
+                        , strEmail
+                        , getGenderCode(strGender)
+                        , strCpNo
+                        , strAddress
+                        , strBirthdate
+                        , strStatus
+                        , strDateStarted
+                        , strDateResigned
                 );
-
-                txtEmpID.setText("");
-                txtLastName.setText("");
-                txtFirstName.setText("");
-                txtEmail.setText("");
-                cmbGender.setSelectedItem(null);
-                txtCpNo.setText("");
-                txtAddress.setText("");
-                txtBirthdate.setText("");
-
-                txtDateStarted.setText("");
-                txtDateResigned.setText("");
-
-
-                db.populateTable(db.fetchEmployees(), populatedTable);
-                switchToCard("pnlManagement");
-
+                    
+                    // Reset Input
+                    txtEmpID.setText("");
+                    txtLastName.setText("");
+                    txtFirstName.setText("");
+                    txtEmail.setText("");
+                    cmbGender.setSelectedItem(null);
+                    txtCpNo.setText("");
+                    txtAddress.setText("");
+                    txtBirthdate.setText("");
+                    txtDateStarted.setText("");
+                    txtDateResigned.setText("");
+                    
+                    switchToCard("pnlManagement");
             } else {
                 int row = tblManagement.getSelectedRow();
                 if (row != -1) {
                     // Update existing employee record
-                    String employeeId = txtEmpID.getText().trim();
-                    String lastName = txtLastName.getText().trim();
-                    String firstName = txtFirstName.getText().trim();
-                    String email = txtEmail.getText().trim();
-                    genderCode = switch(cmbGender.getSelectedItem().toString().trim()){
-                        case "Male" -> 
-                            "M";
-                        case "Female"->
-                            "F";
-                        default ->
-                            "";
-                    };
-                    String cpNo = txtCpNo.getText().trim();
-                    String address = txtAddress.getText().trim();
-                    String birthdate = txtBirthdate.getText().trim(); 
-                    String status = txtStatus.getSelectedItem().toString().trim();
-                    String dateStarted = txtDateStarted.getText().trim();
-                    String dateResigned = txtDateResigned.getText().trim();
-
-                    db.updateEmployee(employeeId, lastName, firstName, email, genderCode, cpNo, address, birthdate, status, dateStarted, dateResigned);
-                    db.populateTable(db.fetchEmployees(), populatedTable);
-
+                    employeeController.updateEmployee(
+                            populatedTable
+                            , strEmpId
+                            , strLastName
+                            , strFirstName
+                            , strEmail
+                            , getGenderCode(strGender)
+                            , strCpNo
+                            , strAddress
+                            , strBirthdate
+                            , strStatus
+                            , strDateStarted
+                            , strDateResigned
+                    );
+                    
+                    // Reset Input
                     txtEmpID.setText("");
                     txtLastName.setText("");
                     txtFirstName.setText("");
@@ -2390,8 +2601,10 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "No record selected to update");
                 }
+                
             }
         }
+        
     }//GEN-LAST:event_btnConfirmEmployeeMouseClicked
 
     private void btnBackEmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackEmployeeMouseClicked
@@ -2399,311 +2612,106 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
         switchToCard("pnlManagement");
     }//GEN-LAST:event_btnBackEmployeeMouseClicked
 
-    private void btnConfirmEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmEmployeeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfirmEmployeeActionPerformed
-
-    private void cmbGenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbGenderMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_cmbGenderMouseClicked
-
-    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDashboardActionPerformed
-
-    private void btnStudentGradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentGradesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnStudentGradesActionPerformed
-
-    private void btnSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjectActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSubjectActionPerformed
-
-    private void btnAddCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddCancelMouseClicked
-        // TODO add your handling code here:    
-        switchToCard("pnlManagement");
-    }//GEN-LAST:event_btnAddCancelMouseClicked
-
     private void cmbGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGenderActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbGenderActionPerformed
 
-    private void cmbCourseCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCourseCodeActionPerformed
+    private void cmbGenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbGenderMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_cmbCourseCodeActionPerformed
-
-    private void btnConfirmStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmStudentMouseClicked
-        // TODO add your handling code here:
-        if(boolAdd){
-            try {
-                studentController.btnAddStudent(txtStudentNo,
-                        txtLastNameStudent,
-                        txtFirstNameStudent,
-                        txtEmailStudent,
-                        cmbGenderStudent,
-                        cmbCourseCode,
-                        txtEmailStudent,
-                        txtAddressStudent,
-                        txtBirthdayStudent,
-                        cmbStatusStudent,
-                        txtDateStartedStudent,
-                        txtDateGraduatedStudent);
-                db.populateTable(db.fetchStudents(), populatedTable);
-                switchToCard("pnlManagement");
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Adding of student failed");
-            }
-        } else {
-            try {
-                studentController.btnUpdateStudent(txtStudentNo,
-                        txtLastNameStudent,
-                        txtFirstNameStudent,
-                        txtEmailStudent,
-                        cmbGenderStudent,
-                        cmbCourseCode,
-                        txtEmailStudent,
-                        txtAddressStudent,
-                        txtBirthdayStudent,
-                        cmbStatusStudent,
-                        txtDateStartedStudent,
-                        txtDateGraduatedStudent);
-                db.populateTable(db.fetchStudents(), populatedTable);
-                switchToCard("pnlManagement");
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "No record selected to update");
-            }
-        }
-    }//GEN-LAST:event_btnConfirmStudentMouseClicked
-
-    private void btnCancelStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelStudentMouseClicked
-        // TODO add your handling code here:
-        switchToCard("pnlManagement");
-    }//GEN-LAST:event_btnCancelStudentMouseClicked
-
-    private void cmbGenderStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGenderStudentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbGenderStudentActionPerformed
-
-    private void cmbStatusStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStatusStudentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbStatusStudentActionPerformed
-
-    private void btnBackEmployee1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackEmployee1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBackEmployee1MouseClicked
-
-    private void btnConfirmEmployee1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmEmployee1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfirmEmployee1MouseClicked
-
-    private void btnConfirmEmployee1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmEmployee1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfirmEmployee1ActionPerformed
-
-    private void btnBackEmployee2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackEmployee2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBackEmployee2MouseClicked
-
-    private void btnConfirmEmployee2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmEmployee2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfirmEmployee2MouseClicked
-
-    private void btnConfirmEmployee2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmEmployee2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfirmEmployee2ActionPerformed
-
-    private void btnBackEmployee3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackEmployee3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBackEmployee3MouseClicked
-
-    private void btnConfirmEmployee3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmEmployee3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfirmEmployee3MouseClicked
-
-    private void btnConfirmEmployee3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmEmployee3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfirmEmployee3ActionPerformed
-
-    private void cmbDay1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDay1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbDay1ActionPerformed
-
-    private void cmbEmployeeName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEmployeeName1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbEmployeeName1ActionPerformed
-
-    private void cmbSYear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSYear1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSYear1ActionPerformed
-
-    private void cmbCollegeCode1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCollegeCode1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbCollegeCode1ActionPerformed
-
-    private void btnConfirmSched1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmSched1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfirmSched1MouseClicked
-
-    private void btnAddCancel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddCancel1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddCancel1MouseClicked
-
-    private void cmbSubjectCode1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSubjectCode1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSubjectCode1ActionPerformed
-
-    private void cmbStudentNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStudentNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbStudentNameActionPerformed
-
-    private void cmbSYear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSYear2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSYear2ActionPerformed
-
-    private void btnConfirmGradeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmGradeMouseClicked
-        // TODO add your handling code here:
-
-        if (boolAdd) {
-            db.addGrade(
-                    cmbSYear2.getSelectedItem().toString().trim(),
-                    cmbSemester2.getSelectedItem().toString().trim(),
-                    "(SELECT student_no FROM finalsoop.student WHERE CONCAT(lastname, ', ', firstname) = '" + cmbStudentName.getSelectedItem().toString().trim() + "')",
-                    "(SELECT subject_code FROM finalsoop.subject WHERE description = '" + cmbSubjectDesc2.getSelectedItem().toString().trim() + "')",
-                    txtBlockNo2.getText().trim(),
-                    Double.parseDouble(cmbGrade.getSelectedItem().toString().trim())
-            );
-            switchToCard("pnlManagement");
-        }else{
-            //update here
-        }
-    }//GEN-LAST:event_btnConfirmGradeMouseClicked
-
-    private void btnAddCancel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddCancel2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddCancel2MouseClicked
-
-    private void cmbSubjectDesc2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSubjectDesc2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSubjectDesc2ActionPerformed
-
-    private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox5ActionPerformed
-
-    private void cmbGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGradeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbGradeActionPerformed
-
-    private void cmbSemester2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSemester2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSemester2ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new schoolManagementMainUI().setVisible(true);
-            }
-        });
-    }
-
+    }//GEN-LAST:event_cmbGenderMouseClicked
+    
+    // switch card logic
     private void switchToCard(String cardName) {
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
         cardLayout.show(mainPanel, cardName);
     }
-
+    
+    // This Function populates the table
     private void cacheResultSet(java.sql.ResultSet rs) {
+        
         if (rs == null) {
             System.out.println("ResultSet is null");
         }
+        
         if (populatedTable == null) {
             System.out.println("populatedTable is null");
         }
         currentRs = rs;
-        db.populateTable(currentRs, populatedTable);
+        entityModel.populateTable(currentRs, populatedTable);
     }
 
-    private void populateSchedOptions() {
-        try {
-            ResultSet rs = null;
-            rs = db.fetchSchoolYears();
-            while (rs.next()) {
-                cmbSYear.addItem(rs.getString("syear"));
-            }
-            rs = db.fetchSemesters();
-            while (rs.next()) {
-                cmbSemester.addItem(rs.getString("semester"));
-            }
-            rs = db.fetchColleges();
-            while (rs.next()) {
-                cmbCollegeCode.addItem(rs.getString("description"));
-            }
-            rs = db.fetchEmployees();
-            while (rs.next()) {
-                cmbEmployeeName.addItem(rs.getString("lastname") + ", " + rs.getString("firstname"));
-            }
-            rs = db.fetchSubjects();
-            while (rs.next()) {
-                cmbSubjectCode.addItem(rs.getString("description"));
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    private String getGenderCode(String gender) {
+        return switch (gender) {
+            case "Male" ->
+                "M";
+            case "Female" ->
+                "F";
+            default ->
+                "";
+        };
     }
     
-    public void populateGradeOptions(){
-        try{
-            ResultSet rs = db.fetchSchoolYears();
-            while(rs.next()){
+    
+    private void populateSchedOptions() {
+    try {
+        ResultSet rs = null;
+        rs = entityModel.fetchSchoolYears();
+        while (rs.next()) {
+            cmbSYear.addItem(rs.getString("syear"));
+        }
+        rs = entityModel.fetchSemesters();
+        while (rs.next()) {
+            cmbSemester.addItem(rs.getString("semester"));
+        }
+        rs = entityModel.fetchColleges();
+        while (rs.next()) {
+            cmbCollegeCode.addItem(rs.getString("description"));
+        }
+        rs = entityModel.fetchEmployees();
+        while (rs.next()) {
+            cmbEmployeeName.addItem(rs.getString("lastname") + ", " + rs.getString("firstname"));
+        }
+        rs = entityModel.fetchSubjects();
+        while (rs.next()) {
+            cmbSubjectCode.addItem(rs.getString("description"));
+        }
+        
+      } catch (Exception e) {
+        System.out.println(e);
+      }
+    }
+    
+    public void populateGradeOptions() {
+        try {
+            ResultSet rs = entityModel.fetchSchoolYears();
+            while (rs.next()) {
                 cmbSYear2.addItem(rs.getString("syear"));
             }
-            rs = db.fetchSemesters();
-            while(rs.next()){
+            rs = entityModel.fetchSemesters();
+            while (rs.next()) {
                 cmbSemester2.addItem(rs.getString("semester"));
             }
             PreparedStatement ps = conn.prepareStatement("SELECT CONCAT(lastname, ', ', firstname) AS full_name FROM finalsoop.student;");
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 cmbStudentName.addItem(rs.getString("full_name"));
             }
-            rs = db.fetchSubjects();
-            while(rs.next()){
+            rs = entityModel.fetchSubjects();
+            while (rs.next()) {
                 cmbSubjectDesc2.addItem(rs.getString("description"));
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     public String findItemInResultSet(ResultSet rs, String targetValue, String columnName, String targetColumn) {
-        try {
-            while (rs.next()) {
-                String value = rs.getString(columnName);
-                if (value.equals(targetValue)) {
-                    value = rs.getString(targetColumn);
-                    return value;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
-    }
-    public String findConcatenatedItemInResultSet(ResultSet rs, String targetValue, String column1, String column2, String targetColumn) {
     try {
         while (rs.next()) {
-            // Concatenate the two columns
-            String concatenatedValue = rs.getString(column1) + " " + rs.getString(column2);
-            
-            // Check if the concatenated value matches the target value
-            if (concatenatedValue.equals(targetValue)) {
-                // Retrieve the value from the target column
-                return rs.getString(targetColumn);
+            String value = rs.getString(columnName);
+            if (value.equals(targetValue)) {
+                value = rs.getString(targetColumn);
+                return value;
             }
         }
     } catch (Exception e) {
@@ -2711,6 +2719,24 @@ public class schoolManagementMainUI extends javax.swing.JFrame {
     }
     return null;
 }
+    
+    public String findConcatenatedItemInResultSet(ResultSet rs, String targetValue, String column1, String column2, String targetColumn) {
+        try {
+            while (rs.next()) {
+                // Concatenate the two columns
+                String concatenatedValue = rs.getString(column1) + " " + rs.getString(column2);
+
+                // Check if the concatenated value matches the target value
+                if (concatenatedValue.equals(targetValue)) {
+                    // Retrieve the value from the target column
+                    return rs.getString(targetColumn);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

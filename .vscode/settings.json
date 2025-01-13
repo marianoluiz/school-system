@@ -1,0 +1,7 @@
+{
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "d:\\Programming\\languages\\#Java\\2nd-year\\jar\\flatlaf-3.5.2.jar",
+    "d:\\Programming\\languages\\#Java\\2nd-year\\jar\\mysql-connector-j-9.1.0\\mysql-connector-j-9.1.0.jar"
+  ]
+}
