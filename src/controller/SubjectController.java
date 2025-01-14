@@ -5,26 +5,25 @@
 package controller;
 
 import java.sql.ResultSet;
-import model.CollegeModel;
+import model.SubjectModel;
 import view.DashboardView;
 
 /**
  *
  * @author Mariano
  */
-public class CollegeController {
-    
-    CollegeModel collegeModel = null;
+public class SubjectController {
+    SubjectModel subjectModel = null;
     DashboardView dashboardView = null;
-    
-    public CollegeController(CollegeModel collegeModel, DashboardView dashboardView) {
-        this.collegeModel = collegeModel;
+
+    public SubjectController(SubjectModel subjectModel, DashboardView dashboardView) {
+        this.subjectModel = subjectModel;
         this.dashboardView = dashboardView;
     }
     
-    	public ResultSet fetchColleges() {
+    	public ResultSet fetchSubjects() {
 		try {
-			return collegeModel.fetchColleges();
+			return subjectModel.fetchSubjects();
 		} catch (Exception e) {
 			System.out.println(e);
 		}

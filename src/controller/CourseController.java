@@ -5,29 +5,36 @@
 package controller;
 
 import java.sql.ResultSet;
-import model.CollegeModel;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import model.CourseModel;
 import view.DashboardView;
 
 /**
  *
  * @author Mariano
  */
-public class CollegeController {
-    
-    CollegeModel collegeModel = null;
+public class CourseController {
+    CourseModel courseModel = null;
     DashboardView dashboardView = null;
     
-    public CollegeController(CollegeModel collegeModel, DashboardView dashboardView) {
-        this.collegeModel = collegeModel;
+    public CourseController(CourseModel courseModel, DashboardView dashboardView) {
+        this.courseModel = courseModel;
         this.dashboardView = dashboardView;
     }
     
-    	public ResultSet fetchColleges() {
+        
+	public ResultSet fetchCourses() {
 		try {
-			return collegeModel.fetchColleges();
+			return courseModel.fetchCourses();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return null;
 	}
+    
+    
 }

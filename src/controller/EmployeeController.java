@@ -4,21 +4,39 @@
  */
 package controller;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JTable;
-import model.EntityModel;
+import model.EmployeeModel;
+import model.UiModel;
+import view.DashboardView;
 
 public class EmployeeController {
     
-    EntityModel entityModel;
-    
-    public EmployeeController(EntityModel entityModel) {
-        this.entityModel = entityModel;
+    EmployeeModel employeeModel = null;
+    DashboardView dashboardView = null;
+    UiModel uiModel = null;
+
+    public EmployeeController(EmployeeModel employeeModel, DashboardView dashboardView, UiModel uiModel) {
+        this.employeeModel = employeeModel;
+        this.dashboardView = dashboardView;
+        this.uiModel = uiModel;
     }
+    
+    	public ResultSet fetchEmployees() {
+		try {
+			return employeeModel.fetchEmployees();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
     
     public void addEmployee(JTable populatedTable, String strEmpId, String strLastName, String strFirstName, String strEmail, String strGenderCode, String strCpNo, String strAddress, String strBirthdate, String strStatus, String strDateStarted, String strDateResigned ) {
         // Adding of new employee record
         
-        entityModel.addEmployee(
+        employeeModel.addEmployee(
                 strEmpId
                 , strLastName
                 , strFirstName
@@ -32,12 +50,12 @@ public class EmployeeController {
                 , strDateResigned
         );
         
-        entityModel.populateTable(entityModel.fetchEmployees(), populatedTable);
+        uiModel.populateTable(employeeModel.fetchEmployees(), populatedTable);
     }
     
     public void updateEmployee(JTable populatedTable, String strEmpId, String strLastName, String strFirstName, String strEmail, String strGenderCode, String strCpNo, String strAddress, String strBirthdate, String strStatus, String strDateStarted, String strDateResigned ) {
         
-        entityModel.updateEmployee( 
+        employeeModel.updateEmployee( 
                 strEmpId
                 , strLastName
                 , strFirstName
@@ -51,17 +69,17 @@ public class EmployeeController {
                 , strDateResigned
         );
 
-        entityModel.populateTable(entityModel.fetchEmployees(), populatedTable);
+        uiModel.populateTable(employeeModel.fetchEmployees(), populatedTable);
     }
     
     public void deleteEmployee(JTable populatedTable, String strEmployeeId ) {
         
-        entityModel.deleteEmployee( 
+        employeeModel.deleteEmployee( 
                 strEmployeeId
         );
 
-        entityModel.deleteEmployee(strEmployeeId);
-        entityModel.populateTable(entityModel.fetchEmployees(), populatedTable);
+        employeeModel.deleteEmployee(strEmployeeId);
+        uiModel.populateTable(employeeModel.fetchEmployees(), populatedTable);
     }
 
 }

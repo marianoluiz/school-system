@@ -60,8 +60,8 @@ public class GradesModel {
 			return ps.executeQuery("SELECT * FROM finalsoop.student_grades_view");
 		} catch (SQLException e) {
 			System.out.println(e);
+                        return null;
 		}
-		return null;
 	}
         
         public void deleteGrade(String strSyear, String strSemester, String strStudentNo, String strSubjectCode) {

@@ -68,8 +68,10 @@ public class StudentModel {
 			return ps.executeQuery("SELECT * FROM finalsoop.student");
 		} catch (SQLException e) {
 			System.out.println(e);
+                        throw new RuntimeException("Failed to fetch students", e);
+                        // The method execution stops when an exception is thrown
 		}
-		return null;
+
 	}
         
         

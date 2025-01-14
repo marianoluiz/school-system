@@ -5,29 +5,33 @@
 package controller;
 
 import java.sql.ResultSet;
-import model.CollegeModel;
+import java.sql.SQLException;
+import java.sql.Statement;
+import model.SchoolYearModel;
 import view.DashboardView;
 
 /**
  *
  * @author Mariano
  */
-public class CollegeController {
-    
-    CollegeModel collegeModel = null;
+public class SchoolYearController {
+    SchoolYearModel schoolYearModel = null;
     DashboardView dashboardView = null;
     
-    public CollegeController(CollegeModel collegeModel, DashboardView dashboardView) {
-        this.collegeModel = collegeModel;
+    public SchoolYearController(SchoolYearModel schoolYearModel, DashboardView dashboardView) {
+        this.schoolYearModel = schoolYearModel;
         this.dashboardView = dashboardView;
     }
     
-    	public ResultSet fetchColleges() {
+    
+    	public ResultSet fetchSchoolYears() {
 		try {
-			return collegeModel.fetchColleges();
+			return schoolYearModel.fetchSchoolYears();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return null;
 	}
+        
+        
 }

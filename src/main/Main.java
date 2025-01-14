@@ -1,12 +1,10 @@
 package main;
 import com.formdev.flatlaf.FlatLightLaf;
-import controller.EmployeeController;
-import controller.EntityController;
 import java.sql.*;
 import javax.swing.*;
-import model.DBConnection;
-import view.DashboardView;
+import view.*;
 import model.*;
+import controller.*;
 
 public class Main {
     
@@ -37,13 +35,33 @@ public class Main {
         DashboardView dashboardView = new DashboardView();
         
       
-        // Controller
-        EntityController entityController = new EntityController( dashboardView, entityModel);        
-        EmployeeController employeeController = new EmployeeController(entityModel);
+        // Passing model and view to Controller
+        BuildingController buildingController = new BuildingController(buildingModel, dashboardView);
+        CollegeController collegeController = new CollegeController(collegeModel, dashboardView);
+        CourseController courseController = new CourseController(courseModel, dashboardView);
+        EmployeeController employeeController = new EmployeeController(employeeModel, dashboardView, uiModel);
+        GradesController gradesController = new GradesController(gradesModel, dashboardView);
+        SchoolYearController schoolYearController = new SchoolYearController(schoolYearModel, dashboardView);
+        SemesterController semesterController = new SemesterController(semesterModel, dashboardView);
+        StudentController studentController = new StudentController(studentModel, dashboardView);
+        SubjectController subjectController = new SubjectController(subjectModel, dashboardView);
+        SubjectScheduleController subjectScheduleController = new SubjectScheduleController(subjectScheduleModel, dashboardView);
+        UiController uiController = new UiController(uiModel, dashboardView, courseController);
        
-        // Passing controller
-        dashboardView.setEntityController(entityController);
-        dashboardView.setEmployeeController(employeeController);
+        // Passing controller to view
+        dashboardView.setControllers(
+            buildingController,
+            collegeController,
+            courseController,
+            employeeController,
+            gradesController,
+            schoolYearController,
+            semesterController,
+            studentController,
+            subjectController,
+            subjectScheduleController,
+            uiController
+        );
                 
         dashboardView.setVisible(true);
     }

@@ -3,22 +3,27 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/projs/OOP_Finals/src/controller/SchoolYearController.java</file>
+            <file>file:/D:/projs/OOP_Finals/src/controller/SubjectController.java</file>
             <file>file:/D:/projs/OOP_Finals/src/controller/CollegeController.java</file>
             <file>file:/D:/projs/OOP_Finals/src/model/EmployeeModel.java</file>
             <file>file:/D:/projs/OOP_Finals/src/main/Main.java</file>
+            <file>file:/D:/projs/OOP_Finals/src/controller/SemesterController.java</file>
             <file>file:/D:/projs/OOP_Finals/src/controller/EmployeeController.java</file>
             <file>file:/D:/projs/OOP_Finals/src/model/GradesModel.java</file>
             <file>file:/D:/projs/OOP_Finals/src/model/CourseModel.java</file>
             <file>file:/D:/projs/OOP_Finals/src/model/SubjectModel.java</file>
+            <file>file:/D:/projs/OOP_Finals/src/controller/CourseController.java</file>
             <file>file:/D:/projs/OOP_Finals/src/model/UiModel.java</file>
             <file>file:/D:/projs/OOP_Finals/src/view/DashboardView.java</file>
+            <file>file:/D:/projs/OOP_Finals/src/controller/UiController.java</file>
+            <file>file:/D:/projs/OOP_Finals/src/controller/SubjectScheduleController.java</file>
             <file>file:/D:/projs/OOP_Finals/src/model/SubjectScheduleModel.java</file>
             <file>file:/D:/projs/OOP_Finals/src/model/SemesterModel.java</file>
-            <file>file:/D:/projs/OOP_Finals/src/model/DBConnection.java</file>
-            <file>file:/D:/projs/OOP_Finals/src/controller/EntityController.java</file>
+            <file>file:/D:/projs/OOP_Finals/src/controller/StudentController.java</file>
             <file>file:/D:/projs/OOP_Finals/src/model/CollegeModel.java</file>
-            <file>file:/D:/projs/OOP_Finals/src/view/pnlManagement.java</file>
             <file>file:/D:/projs/OOP_Finals/src/model/StudentModel.java</file>
+            <file>file:/D:/projs/OOP_Finals/src/controller/GradesController.java</file>
             <file>file:/D:/projs/OOP_Finals/src/model/SchoolYearModel.java</file>
         </group>
     </open-files>

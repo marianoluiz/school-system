@@ -4,49 +4,63 @@
  */
 package controller;
 
-import model.EntityModel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import model.SubjectScheduleModel;
+import model.UiModel;
 import view.DashboardView;
+
 /**
  *
- * @author tulan
+ * @author Mariano
  */
-public class EntityController {
-    private EntityModel entityModel;
-    private DashboardView dashboardView;
+public class UiController {
+    
+    UiModel uiModel = null;
+    DashboardView dashboardView = null;
+    CourseController courseController = null;
+
+    public UiController(UiModel uiModel, DashboardView dashboardView, CourseController courseController) {
+        this.uiModel = uiModel;
+        this.dashboardView = dashboardView;
+    }
     
     String cachedStudentNo = "";
     String genderTransformed;
     String statusTransformed;
-    
-    public EntityController(DashboardView dashboardView, EntityModel entityModel) {
-        this.entityModel = entityModel;
-        this.dashboardView = dashboardView;
-    }
-    
+        
     public void cacheOldStudentNo(String oldStudentNo){
         cachedStudentNo = oldStudentNo;
     }
-    
-    public void populateCourseOptions(JComboBox CourseCode){
+        
+        public void populateTable(ResultSet rs, javax.swing.JTable table) {
+		try {
+                    uiModel.populateTable(rs, table);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+        
         //populating the combo boxes
-        try {
-            ResultSet rs = entityModel.fetchCourses();
-            while(rs.next()){
-                CourseCode.addItem(rs.getString("description"));
+        public void populateCourseOptions(JComboBox CourseCode){
+            try {
+                ResultSet rs = courseController.fetchCourses();
+                while(rs.next()){
+                    CourseCode.addItem(rs.getString("description"));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(EntityController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    public void transformComboBoxes(JComboBox Gender, JComboBox Status){
+        
+        public void transformComboBoxes(JComboBox Gender, JComboBox Status){
         //Transforming hardcoded values from the combo box to match the value needed by the database
         genderTransformed = switch(Gender.getSelectedItem().toString().trim()){
              case "Male" ->
@@ -65,36 +79,10 @@ public class EntityController {
                  "";
          };
     }
-    
-    public void btnAddStudent (JTextField StudentNo, 
-             JTextField LastName, 
-             JTextField FirstName, 
-             JTextField Email, 
-             JComboBox Gender, 
-             JComboBox CourseCode, 
-             JTextField CpNumber, 
-             JTextField Address, 
-             JTextField Birthday, 
-             JComboBox Status, 
-             JTextField DateStarted, 
-             JTextField DateGraduated) throws Exception 
-    {
-         transformComboBoxes(Gender, Status);
-         entityModel.addStudent(StudentNo.getText().trim(), 
-                 LastName.getText().trim(), 
-                 FirstName.getText(), 
-                 Email.getText(), 
-                 genderTransformed, 
-                 "(SELECT course_code FROM finalsoop.course WHERE description = '" + CourseCode.getSelectedItem().toString().trim() + "')", 
-                 CpNumber.getText().trim(), 
-                 Address.getText().trim(), 
-                 Birthday.getText().trim(), 
-                 statusTransformed, 
-                 DateStarted.getText().trim(), 
-                 DateGraduated.getText().trim());
-         
-     }
-     public void btnSetFields(JTable Table,
+        
+        
+    public void btnSetFields(
+             JTable Table,
              JTextField StudentNo, 
              JTextField LastName, 
              JTextField FirstName, 
@@ -142,49 +130,8 @@ public class EntityController {
              JOptionPane.showMessageDialog(null, "No record selected to update");
          }
      }
-     public void btnUpdateStudent(JTextField StudentNo, 
-             JTextField LastName, 
-             JTextField FirstName, 
-             JTextField Email, 
-             JComboBox Gender, 
-             JComboBox CourseCode, 
-             JTextField CpNumber, 
-             JTextField Address, 
-             JTextField Birthday, 
-             JComboBox Status, 
-             JTextField DateStarted, 
-             JTextField DateGraduated) throws Exception{
-        
-
-         
-        //basically, i want transform the values of the combo boxes into a format accepted by the query before running the query
-        transformComboBoxes(Gender, Status);
-        entityModel.updateStudent(cachedStudentNo, 
-                StudentNo.getText().trim(), 
-                LastName.getText().trim(), 
-                FirstName.getText(), 
-                Email.getText(), 
-                genderTransformed, 
-                "(SELECT course_code FROM finalsoop.course WHERE description = '" + CourseCode.getSelectedItem().toString().trim() + "')", 
-                CpNumber.getText().trim(), 
-                Address.getText().trim(), 
-                Birthday.getText().trim(), 
-                statusTransformed, 
-                DateStarted.getText().trim(), 
-                DateGraduated.getText().trim());
-        
-         System.out.println("cpnum: " + CpNumber.getText());
-
-     }
-     
-     public void btnDeleteStudent(JTable Table) throws Exception{
-         int row = Table.getSelectedRow();
-            String studentNumber = Table.getModel().getValueAt(row, 0).toString();
-         
-            entityModel.deleteStudent(studentNumber);
-     }
-     
-     //you can re-use this function
+    
+    //you can re-use this function
      //it accepts a resultset(e.g. db.fetchStudents(), db.fetchColleges()) and it takes in a value from columnName then finds the related value from targetColumn
      //for example, 
      //columnName | targetColumn
@@ -205,4 +152,5 @@ public class EntityController {
         }
         return null;
     }
+
 }

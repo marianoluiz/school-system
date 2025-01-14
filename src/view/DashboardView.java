@@ -1,9 +1,7 @@
 
 package view;
 
-import controller.EmployeeController;
-import controller.EntityController;
-import model.EntityModel;
+import controller.*;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.awt.CardLayout;
@@ -11,32 +9,45 @@ import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import model.DBConnection;
-
 
 public class DashboardView extends javax.swing.JFrame {
     
-    private BuildingModel buildingModel;
-    private EntityController entityController;
+    private BuildingController buildingController;
+    private CollegeController collegeController;
+    private CourseController courseController;
     private EmployeeController employeeController;
-
-
-    // Testing
-    Connection conn = new DBConnection().Connect();
+    private GradesController gradesController;
+    private SchoolYearController schoolYearController;
+    private SemesterController semesterController;
+    private StudentController studentController;
+    private SubjectController subjectController;
+    private SubjectScheduleController subjectScheduleController;
+    private UiController uiController;
     
-    // For populating the options and some unrevised stuffs
-    public void setEntityModel(EntityModel entityModel) {
-        this.entityModel = entityModel;
-    }
-    
-    // set the controller
-    public void setEntityController(EntityController entityController) {
-        this.entityController = entityController;
-    }
-    
-    // set the controller
-    public void setEmployeeController (EmployeeController employeeController) {
+    public void setControllers(
+        BuildingController buildingController, 
+        CollegeController collegeController, 
+        CourseController courseController, 
+        EmployeeController employeeController, 
+        GradesController gradesController, 
+        SchoolYearController schoolYearController, 
+        SemesterController semesterController, 
+        StudentController studentController, 
+        SubjectController subjectController, 
+        SubjectScheduleController subjectScheduleController, 
+        UiController uiController
+    ) {
+        this.buildingController = buildingController;
+        this.collegeController = collegeController;
+        this.courseController = courseController;
         this.employeeController = employeeController;
+        this.gradesController = gradesController;
+        this.schoolYearController = schoolYearController;
+        this.semesterController = semesterController;
+        this.studentController = studentController;
+        this.subjectController = subjectController;
+        this.subjectScheduleController = subjectScheduleController;
+        this.uiController = uiController;
     }
 
     private String currentData = "";
@@ -1844,60 +1855,63 @@ public class DashboardView extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
         populatedTable = tblDashboard; // Either Dashboard or Management
-        cacheResultSet(entityModel.fetchStudents());
+        cacheResultSet(studentController.fetchStudents());
+        // currentData is for tracking which table is selected when user adds or update or delete.
+
     }//GEN-LAST:event_formWindowActivated
 
     private void btnStudentGradesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStudentGradesMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(entityModel.fetchGrades());
+        cacheResultSet(gradesController.fetchGrades());
         currentData = "StudentGrades";
+        // currentData is for tracking which table is selected when user adds or update or delete.
     }//GEN-LAST:event_btnStudentGradesMouseClicked
 
     private void btnSubjSchedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubjSchedMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(entityModel.fetchSubjectSchedules());
+        cacheResultSet(subjectScheduleController.fetchSubjectSchedules());
         currentData = "SubjectSchedule";
     }//GEN-LAST:event_btnSubjSchedMouseClicked
 
     private void btnSchoolYearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSchoolYearMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(entityModel.fetchSchoolYears());
+        cacheResultSet(schoolYearController.fetchSchoolYears());
         currentData = "SchoolYear";
     }//GEN-LAST:event_btnSchoolYearMouseClicked
 
     private void btnCollegeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCollegeMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(entityModel.fetchColleges());
+        cacheResultSet(collegeController.fetchColleges());
         currentData = "College";
     }//GEN-LAST:event_btnCollegeMouseClicked
 
     private void btnSemesterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSemesterMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(entityModel.fetchSemesters());
+        cacheResultSet(semesterController.fetchSemesters());
         currentData = "Semester";
     }//GEN-LAST:event_btnSemesterMouseClicked
 
     private void btnCourseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCourseMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(entityModel.fetchCourses());
+        cacheResultSet(courseController.fetchCourses());
         currentData = "Course";
     }//GEN-LAST:event_btnCourseMouseClicked
 
     private void btnStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStudentMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(entityModel.fetchStudents());
+        cacheResultSet(studentController.fetchStudents());
         currentData = "Students";
     }//GEN-LAST:event_btnStudentMouseClicked
 
     private void btnEmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEmployeeMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(entityModel.fetchEmployees());
+        cacheResultSet(employeeController.fetchEmployees());
         currentData = "Employee";
     }//GEN-LAST:event_btnEmployeeMouseClicked
 
     private void btnSubjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubjectMouseClicked
         // TODO add your handling code here:
-        cacheResultSet(entityModel.fetchSubjects());
+        cacheResultSet(subjectController.fetchSubjects());
         currentData = "Subject";
 
     }//GEN-LAST:event_btnSubjectMouseClicked
@@ -1906,7 +1920,7 @@ public class DashboardView extends javax.swing.JFrame {
         // TODO add your handling code here:
         switchToCard("pnlDashboard");
         populatedTable = tblDashboard;
-        cacheResultSet(entityModel.fetchStudents());
+        cacheResultSet(studentController.fetchStudents());
         currentData = "Students";
     }//GEN-LAST:event_btnDashboardMouseClicked
 
@@ -1914,7 +1928,7 @@ public class DashboardView extends javax.swing.JFrame {
         // TODO add your handling code here:
         switchToCard("pnlManagement");
         populatedTable = tblManagement;
-        cacheResultSet(entityModel.fetchStudents());
+        cacheResultSet(studentController.fetchStudents());
         currentData = "Students";
     }//GEN-LAST:event_btnManagementMouseClicked
 
@@ -1933,7 +1947,7 @@ public class DashboardView extends javax.swing.JFrame {
 
         if (currentData.equals("Students")) {
             switchToCard("pnlStudent");
-            entityController.populateCourseOptions(cmbCourseCode);
+            uiController.populateCourseOptions(cmbCourseCode);
         }
 
         if (currentData.equals("Employee")) {
@@ -1954,8 +1968,9 @@ public class DashboardView extends javax.swing.JFrame {
         System.out.println(currentData);
         if (currentData.equals("Students")) {
             switchToCard("pnlStudent");
-            entityController.populateCourseOptions(cmbCourseCode);
-            entityController.btnSetFields(
+            courseController.populateCourseOptions(cmbCourseCode);
+            
+            uiController.btnSetFields(
                     tblManagement,
                     txtStudentNo,
                     txtLastNameStudent,
@@ -1969,7 +1984,8 @@ public class DashboardView extends javax.swing.JFrame {
                     cmbStatusStudent,
                     txtDateStartedStudent,
                     txtDateGraduatedStudent);
-        }
+            }
+        
         if (currentData.equals("College")) {
             int row = tblManagement.getSelectedRow();
 
@@ -2626,7 +2642,7 @@ public class DashboardView extends javax.swing.JFrame {
         cardLayout.show(mainPanel, cardName);
     }
     
-    // This Function populates the table
+    // This Function receives the current table and the query
     private void cacheResultSet(java.sql.ResultSet rs) {
         
         if (rs == null) {
@@ -2637,7 +2653,7 @@ public class DashboardView extends javax.swing.JFrame {
             System.out.println("populatedTable is null");
         }
         currentRs = rs;
-        entityModel.populateTable(currentRs, populatedTable);
+        uiController.populateTable(currentRs, populatedTable);
     }
 
     private String getGenderCode(String gender) {
@@ -2683,23 +2699,27 @@ public class DashboardView extends javax.swing.JFrame {
     
     public void populateGradeOptions() {
         try {
-            ResultSet rs = entityModel.fetchSchoolYears();
+            ResultSet rs = schoolYearController.fetchSchoolYears();
             while (rs.next()) {
                 cmbSYear2.addItem(rs.getString("syear"));
             }
-            rs = entityModel.fetchSemesters();
+            rs = semesterController.fetchSemesters();
             while (rs.next()) {
                 cmbSemester2.addItem(rs.getString("semester"));
             }
+            
             PreparedStatement ps = conn.prepareStatement("SELECT CONCAT(lastname, ', ', firstname) AS full_name FROM finalsoop.student;");
             rs = ps.executeQuery();
+            
             while (rs.next()) {
                 cmbStudentName.addItem(rs.getString("full_name"));
             }
+            
             rs = entityModel.fetchSubjects();
             while (rs.next()) {
                 cmbSubjectDesc2.addItem(rs.getString("description"));
             }
+            
         } catch (Exception e) {
             System.out.println(e);
         }
